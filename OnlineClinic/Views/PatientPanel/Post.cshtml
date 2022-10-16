@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "_LayoutPatient";
+}
+
+@{
+    var post = ViewData["Post"] as BlogPost;
+}
+
+<div class="page-wrapper" style="min-height: 702px;">
+    <div class="content">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="blog-view">
+                    <article class="blog blog-single-post">
+                        <h3 class="blog-title">@post.header</h3>
+                        <div class="blog-image">
+                            <a href="#.">
+                                <img alt=""
+                                     src="@($"data:image/jpeg;base64," +
+                                $"{Convert.ToBase64String(post.img)}")"
+                                     class="img-fluid">
+                            </a>
+                        </div>
+                        <div class="form-group">
+                            @Html.Raw(post.content)
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(function () {
+        $(document).ready(function () {
+            var content = $(text1).attr("value")
+            $(text1).html(`${content}`)
+            $('textarea').each(function () {
+                this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;'
+                +'resize:none');
+            }).on('input', function () {
+              this.style.height = 'auto';
+              this.style.height = (this.scrollHeight) + 'px';
+            });
+        })
+    })
+</script>
+

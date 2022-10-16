@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "_LayoutGiveAppointment";
+}
+@model GiveAppointmentViewModel
+
+<section class="appointment-area appointment-area-three appointment-page ptb-100">
+    <div class="container">
+        <div class="appointment-here-form">
+            <div class="section-title">
+                <span>وقت ملاقات</span>
+                <h2>دادن نوبت ویزیت</h2>
+            </div>
+            <form asp-action="EditTimeConfirm">
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6" id="date4">
+                        <div class="form-group">
+                            <div class="input-group date">
+                                <input autocomplete="off" asp-for="Date"
+                                       type="text" id="inputDate4" class="form-control" placeholder="تاریخ">
+                                <span class="input-group-addon">
+                                </span>
+                            </div>
+                            <i class="bx bx-calendar"></i>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="form-group">
+                            <input type="time" asp-for="Time"
+                                   min="09:00" max="21:00" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="default-btn">درخواست</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>    

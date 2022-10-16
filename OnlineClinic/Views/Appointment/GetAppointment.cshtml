@@ -1,0 +1,166 @@
+﻿@model AppointmentViewModel
+@inject UserManager<OnlineClinicUser> userManager
+@{
+    var user = await userManager.FindByNameAsync(User.Identity.Name);
+    var specialities = ViewData["specialities"] as List<Speciality>;
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<section class="emergency-area bg-top ptb-100 mt-3">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5">
+                <div class="emergency-item">
+                    <div class="image">
+                        <img src="~/assets/img/NewDoctor.jpg" alt="image">
+                    </div>
+                    <div class="content">
+                        <p>
+                            <a href="tel:821-456-321"><b>تماس با ما:</b>۱۲۳۴۵۶۷۸</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="emergency-form">
+                    <div class="content">
+                        <h3>
+                            <i class="flaticon-calendar"></i>
+                            از دكترت نوبت بگير
+                        </h3>
+                    </div>
+                    <form asp-controller="Appointment" asp-action="AppointmentConfirm">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <div id="DATinput">
+
+                        </div>
+                        <div id="Specialityinput">
+
+                        </div>
+                        <div id="Doctorinput">
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="tel"
+                                           placeholder="شماره موبايل خود را وارد نماييد">
+                                    <i class="flaticon-phone-call"></i>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6" style="z-index:4">
+                                <div class="form-group">
+                                    <i class="flaticon-shield"></i>
+                                    <div class="nice-select" tabindex="0">
+                                        <span class="current">انتخاب تخصص</span>
+                                        <ul class="list">
+                                            <li id="speciality" value="" class="option selected focus">انتخاب تخصص</li>
+                                            @foreach (var item in specialities)
+                                            {
+                                                <li id="speciality" speciality="@item.name" value="@item.Id" class="option selected focus">
+                                                    @item.name
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6" style="z-index:4">
+                                <div class="form-group">
+                                    <i class="flaticon-doctor"></i>
+                                    <div id="resetdoctor" class="nice-select" tabindex="0">
+                                        <span class="current">انتخاب دكتر</span>
+                                        <ul class="list" id="doctors">
+                                            <li  value="" class="option selected focus">انتخاب دكتر</li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6" style="z-index:3">
+                                <div class="form-group">
+                                    <i class="flaticon-calendar"></i>
+                                    <div id="resettime" class="nice-select" tabindex="0">
+                                        <span class="current">انتخاب زمان</span>
+                                        <ul class="list" id="DatesAndTimes">
+                                            <li id="DAT" value="" class="option selected focus">انتخاب زمان</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="appointment-btn">
+                                    <button type="submit" class="default-btn">
+                                        ثبت نوبت
+                                        <span style="top: 42.1666px; left: -88.7167px;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function () {        
+        $("body").delegate("#speciality", "click", function () {
+            var spec = $(this).attr("speciality")            
+            $("#Specialityinput").html(`<input type="hidden" name="speciality" value="${spec}"/>`)
+            $(Doctorinput).html('')
+            $(DATinput).html('')
+            $(resetdoctor).html(`<span class="current">انتخاب دكتر</span>
+                                        <ul class="list" id="doctors">
+                                            <li id="doctor" class="option selected focus">انتخاب دكتر</li>
+                                        </ul>`)
+            $(resettime).html(`<span class="current">انتخاب زمان</span>
+                                        <ul class="list" id="DatesAndTimes">
+                                            <li data-value="" class="option selected focus">انتخاب زمان</li>
+                                        </ul>`)
+            $.post(
+                '/Appointment/SearchDoctor',
+                { Id: $(this).attr("value") },
+                function (value) {                    
+                    $(value).each(function (index, doctor) {                        
+                        $("#doctors").append
+                        (
+                            `
+                                <li id="doctor" value="${doctor}" class="option selected focus">${doctor}</li>
+                            `
+                        )
+                    })
+                }
+            )
+        })
+        $("body").delegate("#doctor", "click", function () {
+            $(resettime).html(`<span class="current">انتخاب زمان</span>
+                                        <ul class="list" id="DatesAndTimes">
+                                            <li data-value="" class="option selected focus">انتخاب زمان</li>
+                                        </ul>`)
+            $("#DATinput").html('')
+            var doctor = $(this).attr("value")            
+            $("#Doctorinput").html(`<input type="hidden" name="doctor" value="${doctor}"/>`)
+            $.post
+                (
+                    '/Appointment/TimeSearch',
+                    { doctor: $(this).attr("value") },
+                    function (value) {
+                        $(value).each(function (index, DateAndTime) {
+                            $("#DatesAndTimes").append
+                                (
+                                    `
+                                        <li id="DAT" value="${DateAndTime}" class="option selected focus">${DateAndTime}</li >
+                                     `
+                                )
+                        })
+                    }
+                )
+        })
+        $("body").delegate("#DAT", "click", function () {
+            var dat = $(this).attr("value")
+            $("#DATinput").html(`<input type="hidden" name="DAT" value="${dat}"/>`)
+        })
+    })
+</script>

@@ -1,0 +1,87 @@
+﻿@{
+    Layout = "_LayoutDoctor";
+}
+@{
+    var visits = ViewData["Visits"] as List<Visit>;
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<div class="page-wrapper" style="min-height: 610px;">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-8 col-6">
+                <h4 class="page-title">جستجوی بیماران</h4>
+            </div>
+        </div>
+        <div class="row filter-row">
+            <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                <div class="form-group form-focus">
+                    <label class="focus-label">جستجوی نام بیمار</label>
+                    <input id="searchbox"  type="text" class="form-control floating">
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                <a asp-action="PatientSearch" id="btn1" type="submit" class="btn btn-success btn-block"> جستجو </a>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-striped custom-table mb-0 datatable dataTable no-footer">
+                                    <thead>
+                                        <tr role="row">
+                                            <th rowspan="1" colspan="1" style="width: 197.8px;">بیمار</th>
+                                            <th rowspan="1" colspan="1" style="width: 197.8px;">شماره تلفن بیمار</th>
+                                            <th rowspan="1" colspan="1" style="width: 197.8px;">تاریخ ویزیت</th>
+                                            <th rowspan="1" colspan="1" style="width: 197.8px;">وضعیت ویزیت</th>
+                                            <th rowspan="1" colspan="1" style="width: 197.8px;">پرونده پزشکی</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (visits != null)
+                                         {
+                                            @foreach (var item in visits)
+                                             {
+                                                <tr role="row" class="odd">
+                                                    <td>@item.patient_name</td>
+                                                    <td>@item.patient_tel</td>
+                                                    <td>@item.DateAndTime</td>
+                                                    @if (item.status == true)
+                                                    {
+                                                        <td>ویزیت به پایان رسیده است</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>بيمار ويزيت نشده است</td>
+                                                    }
+                                                    <td>
+                                                        <form asp-action="AddOrEditPatient">
+                                                            <input type="hidden" name="DAT" value="@item.DateAndTime" />
+                                                            <input type="hidden" name="Id" value="@item.patient_Id" />
+                                                            <button class="btn btn-primary" type="submit">ويرايش پرونده پزشكی</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                             }
+                                         }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $(btn1).click(function () {
+            var a = $(searchbox).val()
+            $(btn1).attr("href", (("/DoctorPanel/PatientSearch?searchname=")+a));            
+        })
+    })
+</script>

@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "_LayoutPatient";
+}
+@{ 
+    var visits = ViewData["Visits"] as List<Visit>;
+}
+<div class="page-wrapper" style="min-height: 351px;">
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card-box">
+                    <div class="card-block">
+                        <h4 class="card-title">نوبت های من</h4>
+                        <div class="table-responsive">
+                            <table class="table table-striped custom-table mb-0 datatable dataTable no-footer">
+                                <thead>
+                                    <tr>
+                                        <th>نام دکتر</th>
+                                        <th>زمان نوبت</th>
+                                        <th>وضعیت ویزیت</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in visits)
+                                    {
+                                        <tr>
+                                            <td>@item.doctor_name</td>
+                                            <td>@item.DateAndTime</td>
+                                            @if (item.status == true)
+                                            {
+                                                <td>ويزيت به پايان رسيده است</td>   
+                                            }
+                                            else
+                                            {
+                                                <td>هنوز ويزيت نشده ايد</td>   
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

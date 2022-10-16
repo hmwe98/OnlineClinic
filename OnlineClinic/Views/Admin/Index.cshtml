@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+}
+@inject UserManager<OnlineClinicUser> userManager
+@{
+    var user = await userManager.FindByNameAsync(User.Identity.Name);
+}
+<div class="page-wrapper" style="min-height: 527px;">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-7 col-6">
+                <h4 class="page-title">حساب کاربری من</h4>
+            </div>
+        </div>
+        @*<div class="row">
+                <div class="col-sm-5 col-6 m-b-30">
+                    <a asp-action="EditProfile" asp-controller="DoctorPanel"
+                       class="btn btn-primary btn-rounded allfontsize">
+                        <i class="fa fa-plus"></i> ویرایش حساب کاربری
+                    </a>
+                </div>
+            </div>*@
+        <div class="card-box profile-header">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-view">
+                        <div class="profile-basic">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="profile-info-left">
+                                        <h3 class="user-name m-t-0 mb-0">@user.name</h3>
+                                        <small class="text-muted">ادمين</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-7" style="">
+                                    <ul class="personal-info">
+                                        <li>
+                                            <span class="title">نام كاربری</span>
+                                            <span class="text">@user.Email</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

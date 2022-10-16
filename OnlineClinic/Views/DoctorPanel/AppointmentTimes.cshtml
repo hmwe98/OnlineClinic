@@ -1,0 +1,66 @@
+﻿@{
+    Layout = "_LayoutDoctor";
+}
+@{ 
+    var FreeTimes = ViewData["FreeTimes"] as List<Doctor_FreeTime>;
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<form asp-action="GivedAppointmentEdit" asp-controller="DoctorPanel">
+    <div class="page-wrapper" style="min-height: 612px;">
+        <div class="content">            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped custom-table">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">تاریخ و زمان</th>                                    
+                                    <th class="text-left">تعداد مريض</th>                                    
+                                    <th class="text-center">ویرایش</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in FreeTimes)
+                                {
+                                    <tr>
+                                        <td class="text-left">
+                                            <img src="~/assets2/img/user.jpg" class="rounded-circle" alt="" width="28" height="28">
+                                            <h2>@item.freeTime.DateAndTime</h2>
+                                        </td>
+                                        <td class="text-left">
+                                            <img src="~/assets2/img/user.jpg" class="rounded-circle" alt="" width="28" height="28">
+                                            <h2>@item.Count</h2>
+                                        </td>  
+                                        <td class="text-center">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a value="@item.Id" id="btnEdit" class="dropdown-item"><i class="fa fa-pencil m-r-5">
+                                                          </i> تغییر</a>
+                                                    <a value="@item.Id" id="btnDelete" class="dropdown-item">
+                                                    <i class="fa fa-trash-o m-r-5"></i> حذف</a>
+                                                </div>
+                                            </div>
+                                        </td>                                        
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $(() => {        
+        $(btnDelete).click(function () {            
+            var Id = parseInt($(this).attr("value"))
+            $(this).attr("href", (("/DoctorPanel/RemoveTime?Id=") + Id));
+        })
+        $(btnEdit).click(function () {
+            var Id = $(this).attr("value")
+            $(this).attr("href", (("/DoctorPanel/EditTime?Id=") + Id));
+        })
+    })
+</script>

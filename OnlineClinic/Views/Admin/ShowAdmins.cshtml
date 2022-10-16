@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+}
+@inject RoleManager<IdentityRole> rolemanager
+@inject UserManager<OnlineClinicUser> usermanager
+@{ 
+    var Admins = ViewData["admins"] as List<OnlineClinicUser>;
+}
+<div class="page-wrapper" style="min-height: 612px;">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-4 col-3">
+                <h4 class="page-title">ادمین های سایت</h4>
+            </div>            
+        </div>
+        <div class="row doctor-grid">
+            @foreach (var item in Admins)
+            {
+                <div class="col-md-4 col-sm-4  col-lg-3">
+                    <div class="profile-widget">
+                        <div class="doctor-img">
+                            <a class="avatar" href="profile.html">
+                                <img alt="" src="~/assets2/img/user.jpg">
+                            </a>
+                        </div>
+                        <h4 class="doctor-name text-ellipsis"><a>@item.name</a></h4>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

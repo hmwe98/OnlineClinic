@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "_LayoutPatient";
+}
+@inject UserManager<OnlineClinicUser> userManager
+@{
+    var user = await userManager.FindByNameAsync(User.Identity.Name);
+}
+@model PatientViewModel
+<div class="page-wrapper" style="min-height: 351px;">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="page-title">ویرایش حساب کاربری</h4>
+            </div>
+        </div>
+        <form asp-action="EditConfirm" asp-controller="PatientPanel"
+              method="post" enctype="multipart/form-data">            
+            <div class="card-box">
+                <h3 class="card-title">اطلاعات اولیه</h3>
+                <div class="row">
+                    <div class="col-md-12">                        
+                        <div class="profile-basic">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-focus focused">
+                                        <label class="focus-label"> نام و نام خانوادگی</label>
+                                        <input asp-for="name" type="text" class="form-control floating" value="@user.name">
+                                    </div>
+                                </div>                                
+                                <div class="col-md-6">
+                                    <div class="form-group form-focus focused">
+                                        <label class="focus-label">سن</label>
+                                        <input asp-for="age" type="text" class="form-control floating" value="@user.age">
+                                    </div>
+                                </div>                                                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center m-t-20">
+                <button class="btn btn-primary submit-btn" type="submit">ثبت</button>
+            </div>
+        </form>
+    </div>
+</div>

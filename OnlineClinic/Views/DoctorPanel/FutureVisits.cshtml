@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "_LayoutDoctor";
+}
+@inject UserManager<OnlineClinicUser> userManager
+@{
+    var user = await userManager.FindByNameAsync(User.Identity.Name);
+    var futurevisits = ViewData["FutureVisits"] as List<Visit>;
+}
+<div class="page-wrapper">
+    <div class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title d-inline-block">نوبت های آینده</h4>
+                        <a asp-action="ShowAllVisits" asp-route-number=1 
+                           class="btn btn-primary float-right allfontsize">مشاهده همه</a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <tbody>
+                                    @foreach (var item in futurevisits)
+                                     {
+                                        <tr>
+                                            <td style="min-width: 200px;">                                                
+                                                <h2><a asp-action="PatientInfo" asp-route-Id="@item.patient_Id">@item.patient_name</a></h2>
+                                            </td>
+                                            <td>
+                                                @*<h5 style="font-size:16px">زمان ویزیت</h5>*@
+                                                <p>@item.DateAndTime</p>
+                                            </td>
+                                            <td>
+                                                <a asp-action="AddOrEditPatient" asp-route-Id="@item.patient_Id" 
+                                                   asp-route-DAT="@item.DateAndTime" 
+                                                   class="btn btn-primary allfontsize">ويرايش پرونده پزشكی</a>
+                                            </td>                                            
+                                        </tr>
+                                     }                                        
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>

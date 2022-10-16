@@ -1,0 +1,406 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="~/assets/css/animate.css">
+    <!-- Meanmenu CSS -->
+    <link rel="stylesheet" href="~/assets/css/meanmenu.css">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="~/assets/css/fontawesome.min.css">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="~/assets/css/flaticon.css">
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="~/assets/css/nice-select.css">
+    <!-- Odometer CSS -->
+    <link rel="stylesheet" href="~/assets/css/odometer.css">
+    <!-- Magnific CSS -->
+    <link rel="stylesheet" href="~/assets/css/magnific-popup.min.css">
+    <!-- Carousel CSS -->
+    <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
+    <!-- Carousel Default CSS -->
+    <link rel="stylesheet" href="~/assets/css/owl.theme.default.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="~/assets/css/responsive.css">
+    <!-- RTL CSS -->
+    <link rel="stylesheet" href="~/assets/css/rtl.css">
+
+    <title>کلینیک ما</title>
+
+    <link rel="icon" type="image/png" href="~/assets/img/favicon.png">
+</head>
+
+<body>
+    @inject UserManager<OnlineClinicUser> userManager
+    <!-- Start Preloader Area -->
+    <div class="preloader preloader-deactivate">
+        <div class="spinner"></div>
+    </div>
+    <!-- End Preloader Area -->
+    <!-- Start Header Area -->
+    <header class="header-area">
+        <div class="top-header">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <ul class="top-list">
+                            <li>
+                                <i class="flaticon-clock"></i>
+                                شنبه تا چهارشنبه ۹ صبح تا ۹ شب
+                            </li>
+                            <li>
+                                <i class="flaticon-phone-call"></i>
+                                <a dir="rtl" href="tel:821-456-241">با ما تماس بگیرید</a> ۱۲۳۴۵۶۷۸
+                            </li>
+                            <li>
+                                <i class="flaticon-paper-plane"></i>
+                                <a href="mailto:admin@domain.com">admin@domain.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <ul class="top-social">
+                            @if (User.Identity.IsAuthenticated == false)
+                            {
+                                <li>
+                                    <a asp-controller="Account" asp-action="Sign_in" class="log-in">
+                                        ورود
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Account" asp-action="Sign_up" class="sign-in">
+                                        ثبت نام
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Navbar Area -->
+        <div class="navbar-area">
+            <div class="main-responsive-nav">
+                <div class="container">
+                    <div class="main-responsive-menu">
+                        <div class="logo">
+                            <a asp-action="Index" asp-controller="Home">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-navbar">
+                <div class="container-fluid">
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+                        </a>
+
+                        <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent" style="display: block;">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Home" class="nav-link active font-weight-bold">
+                                        خانه
+                                    </a>
+                                </li>
+
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link font-weight-bold">
+                                        خدمات
+                                        <i class="fa fa-angle-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a asp-action="GetAppointment" asp-controller="Appointment" class="nav-link font-weight-bold">
+                                                پذيرش اينترنتی
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a asp-action="Clinic_Intro" asp-controller="Home" class="nav-link font-weight-bold">
+                                                معرفی خدمات پزشکی
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-action="Floor_Guide" asp-controller="Home" class="nav-link font-weight-bold">
+                                                راهنمای طبقات
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-action="Doctor_Intro" asp-controller="Home" class="nav-link font-weight-bold">
+                                                معرفی پزشکان
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                @if (User.Identity.IsAuthenticated == true && User.IsInRole("Admins"))
+                                {
+                                    <li class="nav-item">
+                                        <a asp-action="AllPosts" asp-controller="Admin" class="nav-link font-weight-bold">
+                                            مقالات پزشکی
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.Identity.IsAuthenticated == true && User.IsInRole("Doctors"))
+                                {
+                                    <li class="nav-item">
+                                        <a asp-action="AllPosts" asp-controller="DoctorPanel" class="nav-link font-weight-bold">
+                                            مقالات پزشکی
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.IsInRole("Doctors") == false && User.IsInRole("Admins") == false)
+                                {
+                                    <li class="nav-item">
+                                        <a asp-action="AllPosts" asp-controller="PatientPanel" class="nav-link font-weight-bold">
+                                            مقالات پزشکی
+                                        </a>
+                                    </li>
+                                }
+                                <li class="nav-item">
+                                    <a asp-action="About_us" asp-controller="Home" class="nav-link font-weight-bold">
+                                        درباره ما
+                                    </a>
+                                </li>
+
+                                @if (User.Identity.IsAuthenticated == true && User.IsInRole("Admins"))
+                                {
+                                    var user = await userManager.FindByNameAsync(User.Identity.Name);
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link font-weight-bold">
+                                            @user.name
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item">
+                                                <a asp-action="Index" asp-controller="Admin" class="nav-link font-weight-bold">
+                                                    ورود به پنل کاربری
+                                                </a>
+                                                <a asp-action="Logout" asp-controller="Account" class="nav-link font-weight-bold">
+                                                    خروج
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                }
+
+
+                                @if (User.Identity.IsAuthenticated == true && User.IsInRole("Doctors"))
+                                {
+                                    var user = await userManager.FindByNameAsync(User.Identity.Name);
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link font-weight-bold">
+                                            @user.name
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item">
+                                                <a asp-action="DoctorAccountInfo" asp-controller="DoctorPanel" class="nav-link font-weight-bold">
+                                                    ورود به پنل کاربری
+                                                </a>
+                                                <a asp-action="Logout" asp-controller="Account" class="nav-link font-weight-bold">
+                                                    خروج
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                }
+                                @if (User.Identity.IsAuthenticated == true && User.IsInRole("Doctors") == false &&
+                                  User.IsInRole("Admins") == false)
+                                {
+                                    var user = await userManager.FindByNameAsync(User.Identity.Name);
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link font-weight-bold">
+                                            @user.name
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item">
+                                                <a asp-action="PatientAccountInfo" asp-controller="PatientPanel" class="nav-link font-weight-bold">
+                                                    ورود به پنل کاربری
+                                                </a>
+                                                <a asp-action="Logout" asp-controller="Account" class="nav-link font-weight-bold">
+                                                    خروج
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                }
+                            </ul>
+                            @if (User.IsInRole("Doctors") == false && User.IsInRole("Admins") == false)
+                            {
+                                <div class="others-options">
+                                    <a asp-action="GetAppointment" asp-controller="Appointment" class="default-btn">
+                                        نوبت ملاقات
+                                        <span></span>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- End Navbar Area -->
+    </header>
+    <!-- End Header Area -->
+    @RenderBody()
+    <!-- Start Footer Area -->
+    <section class="footer-area pt-100 pb-70">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>درباره ما</h3>
+                        <p class="text-justify">کلینیک ما به عنوان پلتفرمی برای تسهیل فرآیند درمان و پسادرمان (فالو آپ) بیمار از طریق ارائه سرویس نرم‌افزاری پرونده الکترونیک این امکان را ایجاد می‌کند که همه  بتوانند سه گام ارتباط با بیمار، مراقبت و درمان در فضای مجازی عملیاتی نمایند.</p>                       
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">                    
+                </div>
+                <div class="col-lg-3 col-sm-6">                    
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h3>راه های ارتباط با ما</h3>
+                        <div class="footer-info-contact">
+                            <i class="flaticon-call"></i>
+                            <h3>تلفن</h3>
+                            <span><a href="tel:123456123">12345678</a></span>
+                        </div>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-email"></i>
+                            <h3>ایمیل</h3>
+                            <span><a href="mailto:admin@domain.com">admin@domain.com</a></span>
+                        </div>
+
+                        <div class="footer-info-contact">
+                            <i class="flaticon-pin"></i>
+                            <h3>آدرس</h3>
+                            <span>خیابان قصرالدشت - کوچه ۲۲ - پلاک ۲۱۵ - مجتمع پزشکان ایران</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </section>
+    <!-- End Footer Area -->
+    <!-- Start Copy Right Section -->
+    <div class="copyright-area">
+        <div class="container">
+            <p>
+                <i class="far fa-copyright"></i>
+                کلیه‌ی حقوق این سایت برای کلینیک محفوظ است.                
+            </p>
+        </div>
+    </div>
+    <!-- End Copy Right Section -->
+    <!-- Start Go Top Area -->
+    <div class="go-top">
+        <i class="fa fa-chevron-up"></i>
+        <i class="fa fa-chevron-up"></i>
+    </div>
+    <!-- End Go Top Area -->
+    <!-- Jquery Slim JS -->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="~/assets/js/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <!-- Meanmenu JS -->
+    <script src="~/assets/js/jquery.meanmenu.js"></script>
+    <!-- Nice Select JS -->
+    <script src="~/assets/js/jquery.nice-select.min.js"></script>
+    <!-- Odometer JS -->
+    <script src="~/assets/js/odometer.min.js"></script>
+    <!-- Appear JS -->
+    <script src="~/assets/js/jquery.appear.js"></script>
+    <!-- Datepicker JS -->
+    <script src="~/assets/js/datepicker.min.js"></script>
+    <!-- Magnific JS -->
+    <script src="~/assets/js/jquery.magnific-popup.min.js"></script>
+    <!-- Carousel JS -->
+    <script src="~/assets/js/owl.carousel.min.js"></script>
+    <!-- Form Ajaxchimp JS -->
+    <script src="~/assets/js/jquery.ajaxchimp.min.js"></script>
+    <!-- Form Validator JS -->
+    <script src="~/assets/js/form-validator.min.js"></script>
+    <!-- Contact JS -->
+    <script src="~/assets/js/contact-form-script.js"></script>
+    <!-- Custom JS -->
+    <script src="~/assets/js/main.js"></script>
+
+    @if (TempData["waitmsg"] != null)
+    {
+<script>
+    var seconds = 59
+    $(function () {
+        $(divwaitmodalmessage).modal();
+        var mytimer = setInterval(() => {
+            if (seconds > 0) {
+                $(divtimer).html(`زمان باقي مانده:${seconds--}`)
+            }
+            else {
+                $(divtimer).html(``)
+                this.location = "Account/Sign_in"
+                clearInterval(mytimer);
+            }
+        }, 1000)
+    })
+</script>}
+
+<div class="modal fade" id="divwaitmodalmessage">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h1>پيام سايت</h1>
+            </div>
+            <div class="modal-body ">
+                <lable>@Html.Raw(TempData["waitmsg"])<div id="divtimer"></div></lable>
+            </div>
+            <div class="modal-footer ">
+                <button class="btn btn-danger" data-dismiss="modal">بازگشت</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    @if (TempData["msg"] != null)
+    {
+        <script>
+            $(function () {
+                $(divmodalmessage).modal();
+            })
+        </script>          
+    }
+
+
+    <div class="modal fade" id="divmodalmessage">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h1>پيام سايت</h1>
+                </div>
+                <div class="modal-body ">
+                    <lable>@Html.Raw(TempData["msg"])</lable>                    
+                </div>
+                <div class="modal-footer ">
+                    <button class="btn btn-danger" data-dismiss="modal">بازگشت</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

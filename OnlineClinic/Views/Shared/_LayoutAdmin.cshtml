@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html>
+<head>    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="~/assets2/img/favicon.ico">
+    <title>پنل کاربری</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/assets2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/assets2/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/assets2/css/style.css">
+    <link href="~/assets2/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/assets2/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/assets2/css/fullcalendar.min.css" rel="stylesheet" />
+    <link href="~/assets2/css/select2.min.css" rel="stylesheet" />
+    <link href="~/assets2/css/tagsinput.css" rel="stylesheet" />
+</head>
+<body>
+    @inject UserManager<OnlineClinicUser> userManager
+    @{
+        var user = await userManager.FindByNameAsync(User.Identity.Name);
+    }
+    <div class="header">
+        <div class="header-left">
+            <a asp-action="DoctorAccountInfo" asp-controller="DoctorPanel" class="logo">
+                <img src="~/assets2/img/logo.png" width="35" height="35" alt=""> <span>پنل کاربری</span>
+            </a>
+        </div>
+        <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
+        <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
+        <ul class="nav user-menu float-right">
+            <li class="nav-item dropdown has-arrow">
+                <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
+                    <span>@user.name</span>
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Admin">تغییر رمز عبور</a>
+                    <a class="dropdown-item" asp-action="Logout" asp-controller="Account">خروج</a>
+                </div>
+            </li>
+        </ul>
+        <div class="dropdown mobile-user-menu float-right">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Admin">تغییر رمز عبور</a>
+                <a class="dropdown-item" asp-action="Logout" asp-controller="Account">خروج</a>
+            </div>
+        </div>
+    </div>
+    <div class="main-wrapper">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li class="menu-title">پنل</li>
+                        <li>
+                            <a asp-action="Index" asp-controller="Admin">
+                                <i class="fa fa-dashboard"></i> <span>داشبورد</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-action="AddSpeciality" asp-controller="Admin">
+                                <i class="fa fa-book"></i><span>اضافه کردن تخصص</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-action="AddDoctor" asp-controller="Admin">
+                                <i class="fa fa-user-md"></i><span>اضافه كردن دكتر</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-action="AddAdmin" asp-controller="Admin">
+                                <i class="fa fa-user-md"></i><span>اضافه كردن ادمین</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-action="ShowAllUsers" asp-controller="Admin">
+                                <i class="fa fa-user-md"></i><span>نقش ها</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-action="ShowDoctors" asp-controller="Admin">
+                                <i class="fa fa-user-md"></i><span>دکترهای کلینیک</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-action="ShowAdmins" asp-controller="Admin">
+                                <i class="fa fa-user-md"></i><span>ادمین های سایت</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-action="AddPost1" asp-controller="Admin">
+                                <i class="fa fa-user-md"></i><span>اضافه كردن مطلب وبلاگی</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-action="AllPosts" asp-controller="Admin">
+                                <i class="fa fa-user-md"></i><span>نمايش مطالب وبلاگی</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @RenderBody()
+    </div>
+
+
+
+
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="~/assets2/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets2/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/assets2/js/jquery-3.2.1.min.js"></script>
+    <script src="~/assets2/js/popper.min.js"></script>
+    <script src="~/assets2/js/bootstrap.min.js"></script>
+    <script src="~/assets2/js/jquery.slimscroll.js"></script>
+    <script src="~/assets2/js/Chart.bundle.js"></script>
+    <script src="~/assets2/js/chart.js"></script>
+    <script src="~/assets2/js/app.js"></script>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="~/assets2/js/select2.min.js"></script>
+    <script src="~/assets2/js/moment.min.js"></script>
+    <script src="~/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/assets2/js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+        $(function () {
+            $('#datetimepicker3').datetimepicker({
+                format: 'LT'
+            });
+        });
+    </script>
+
+    @if (TempData["msg"] != null)
+    {
+        <script>
+            $(function () {
+                $(divmodalmessage).modal();
+            })
+        </script>
+
+    }
+    <div class="modal fade" id="divmodalmessage">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h1>پيام سايت</h1>
+                </div>
+                <div class="modal-body ">
+                    <lable>@Html.Raw(TempData["msg"])</lable>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" data-dismiss="modal">بازگشت</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

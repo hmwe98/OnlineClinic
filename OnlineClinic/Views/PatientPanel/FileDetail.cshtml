@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "_LayoutPatient";
+}
+@inject UserManager<OnlineClinicUser> userManager
+@{
+    var user = await userManager.FindByNameAsync(User.Identity.Name);
+}
+<div class="page-wrapper" style="min-height: 661px;">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="page-title">جزئيات پرونده پزشكی</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="blog-view">
+                    <article class="blog blog-single-post">
+                        <h6 class="blog-title">بیماری های گذشته</h6>
+                        <div class="blog-content">
+                            <p >@user.pastDeseases</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="blog-view">
+                    <article class="blog blog-single-post">
+                        <h6 class="blog-title">داروهای مصرفی</h6>
+                        <div class="blog-content">
+                            <p >@user.medications</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="blog-view">
+                    <article class="blog blog-single-post">
+                        <h6 class="blog-title">سابقه بیماری خانوادگی</h6>
+                        <div class="blog-content">
+                            <p>@user.familyhistory</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="blog-view">
+                    <article class="blog blog-single-post">
+                        <h6 class="blog-title">درمان بیماری</h6>
+                        <div class="blog-content">
+                            <p>@user.treatment</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

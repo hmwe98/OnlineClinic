@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+}
+@{ 
+    var Posts = ViewData["Posts"] as List<BlogPost>;
+}
+<div class="page-wrapper" style="min-height: 702px;">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-8 col-4">
+                <h4 class="page-title">بلاگ</h4>
+            </div>
+            <div class="col-sm-4 col-8 text-right m-b-30">
+                <a class="btn btn-primary btn-rounded float-right" asp-action="AddPost1"><i class="fa fa-plus"></i>اضافه كردن مطلب</a>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in Posts)
+            {
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    <div class="blog grid-blog">
+                        <div class="blog-image">
+                            <a asp-action="Post" asp-route-Id="@item.Id"><img class="img-fluid"
+                            src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item.img)}")" 
+                            alt=""></a>
+                        </div>
+                        <div class="blog-content">
+                            <h3 class="blog-title">
+                            <a asp-action="Post" asp-route-Id="@item.Id">
+                            @item.header
+                            </a>
+                            </h3>
+                            <p class="shortdesc text-justify">@item.shortstory</p>                            
+                            <a asp-action="Post" asp-route-Id="@item.Id" class="read-more">
+                            <i class="fa fa-long-arrow-right">
+                            </i>ادامه مطلب</a>
+                            <div>
+                                <a asp-action="EditPost1" asp-route-Id="@item.Id" class="read-more">
+                                    <i class="fa fa-long-arrow-right">
+                                    </i>ویرایش مطلب
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

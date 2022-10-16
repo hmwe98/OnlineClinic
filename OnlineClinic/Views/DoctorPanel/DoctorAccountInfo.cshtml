@@ -1,0 +1,80 @@
+﻿@{
+    Layout = "_LayoutDoctor";
+}
+@inject UserManager<OnlineClinicUser> userManager
+@{
+    var user = await userManager.FindByNameAsync(User.Identity.Name);
+}
+<div class="page-wrapper" style="min-height: 527px;">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-7 col-6">
+                <h4 class="page-title">حساب کاربری من</h4>
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col-sm-5 col-6 m-b-30">
+                <a  asp-action="EditProfile" asp-controller="DoctorPanel" 
+                   class="btn btn-primary btn-rounded allfontsize">
+                    <i class="fa fa-plus"></i> ویرایش حساب کاربری
+                </a>
+            </div>
+        </div>
+        <div class="card-box profile-header">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-view">                        
+                        <div class="profile-basic">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="profile-info-left">
+                                        <h3 class="user-name m-t-0 mb-0">@user.name</h3>
+                                        <small class="text-muted">@user.speciality</small>
+                                        @if (user.nezamCode != 0)
+                                        {
+                                            <div class="staff-id">@($"کد نظام پزشکی"+$":{user.nezamCode}")</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="staff-id">کد نظام پزشكی ثبت نشده است</div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-7" style="">
+                                    <ul class="personal-info">
+                                        <li>
+                                            <span class="title">نام كاربری</span>                                            
+                                            <span class="text">@user.Email</span>                                            
+                                        </li>
+                                        <li>
+                                            <span class="title">سابقه کاری</span>
+                                            @if (user.workexperience != null)
+                                            {
+                                                <span class="text">@user.workexperience</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text">ثبت نشده است</span>
+                                            }
+                                        </li>                                        
+                                        <li>
+                                            <span class="title">ایمیل ارتباطی</span>
+                                            @if (user.Comunication_Email != null)
+                                            {
+                                                <span class="text">@user.Comunication_Email</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text">ثبت نشده است</span>
+                                            }
+                                        </li>                                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

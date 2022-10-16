@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+}
+@model PostViewModel
+<div class="page-wrapper" style="min-height: 702px;">
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h4 class="page-title">اضافه كردن مطلب</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <form method="post" enctype="multipart/form-data"
+                      asp-action="PostConfirm1" asp-controller="Admin">
+                    <div class="form-group">
+                        <label>عنوان مطلب</label>
+                        <input asp-for="header" class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>عكس مطلب</label>
+                        <div>
+                            <input asp-for="img" class="form-control" type="file">
+                            <small class="form-text text-muted">حداكثر حجم عكس:5 مگابايت...فرمت عكس ها:JPG,PNG</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>مقدمه</label>
+                        <textarea cols="30" rows="6" asp-for="shortstory" class="form-control"></textarea>
+                    </div>
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary submit-btn">مرحله بعد</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

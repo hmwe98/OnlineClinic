@@ -1,0 +1,78 @@
+﻿@model LoginViewModel
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<div class="sign-in-area ptb-100">
+    <div class="container">
+        <div class="sign-in-form">
+            <div class="sign-in-title">
+                <h3>خوش آمدید</h3>
+                <p>لطفا وارد حساب کاربری خود شوید</p>
+            </div>
+
+            <form asp-action="LoginConfirm" asp-controller="Account">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <input type="email" asp-for="username" class="form-control" placeholder="ایمیل">
+                            <span asp-validation-for="username"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <input asp-for="password" type="password" class="form-control" placeholder="رمز عبور">
+                            <span asp-validation-for="password"></span>
+                        </div>
+                    </div>                    
+                    <div class="col-lg-12 text-left">
+                        <p class="forgot-password">
+                        <a href="" data-toggle="modal"
+                        id="modal">
+                            فراموشی رمز عبور</a></p>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="send-btn">
+                            <button class="default-btn">
+                                ورود
+                                <span style="top: -2.10001px; left: 79.35px;"></span>
+                            </button>
+                        </div>
+                        <br>
+                        <span>ثبت نام نکردی؟ <a asp-action="Sign_up" asp-controller="Account">ثبت نام</a></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form asp-action="ResetPasswordLevelOne" asp-controller="Account">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">ارسال نام کاربری</h4>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control" name="username" />
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger">ارسال ایمیل</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(() => {         
+        $("#modal").click(() =>
+        {
+            $("#myModal").modal()
+        })
+    })
+</script>

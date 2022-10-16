@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+}
+@{ 
+    var Doctors = ViewData["Doctors"] as List<Doctor>;
+}
+<div class="page-wrapper" style="min-height: 612px;">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-4 col-3">
+                <h4 class="page-title">دکتر های کلینیک</h4>
+            </div>
+            <div class="col-sm-8 col-9 text-right m-b-20">
+                <a asp-action="AddDoctor" asp-controller="Admin" class="btn btn-primary btn-rounded float-right">
+                <i class="fa fa-plus">
+                </i>دکتر اضافه کن</a>
+            </div>
+        </div>
+        <div class="row doctor-grid">
+            @foreach (var item in Doctors)
+             {
+                <div class="col-md-4 col-sm-4  col-lg-3">
+                    <div class="profile-widget">
+                        <div class="doctor-img">
+                            <a class="avatar" href="profile.html">
+                                <img alt="" src="~/assets2/img/user.jpg">
+                            </a>
+                        </div>                    
+                        <h4 class="doctor-name text-ellipsis"><a>@item.name</a></h4>
+                        <div class="doc-prof">@item.Speciality.name</div>                    
+                    </div>
+                </div>
+             }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+﻿@{
+    Layout = "_LayoutDoctor";
+}
+@{
+    var futurevisits = ViewData["FutureVisits"] as List<Visit>;    
+    var backnumber = ViewBag.backnumber;
+    var nextnumber = ViewBag.nextnumber;
+    var count = ViewBag.count;
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<div class="page-wrapper" style="min-height: 610px;">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-8 col-6">
+                <h4 class="page-title">نوبت های آینده</h4>
+            </div>            
+        </div>        
+        <div class="row filter-row">                
+            <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                <a asp-action="PatientSearch" class="btn btn-success btn-block"> جستجوی بیمار </a>
+            </div>
+        </div>        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table  class="table table-striped custom-table mb-0 datatable dataTable no-footer ">
+                                    <thead>
+                                        <tr role="row">
+                                            <th rowspan="1" colspan="1" style="width: 197.8px;">بیمار</th>
+                                            <th rowspan="1" colspan="1" style="width: 197.8px;">شماره تلفن بیمار</th>
+                                            <th rowspan="1" colspan="1" style="width: 197.8px;">تاریخ ویزیت</th>
+                                            <th rowspan="1" colspan="1" style="width: 197.8px;">وضعیت ویزیت</th>
+                                            <th rowspan="1" colspan="1" style="width: 197.8px;">پرونده پزشکی</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>                                       
+                                        @foreach (var item in futurevisits)
+                                         {
+                                            <tr role="row" class="odd">
+                                                <td>@item.patient_name</td>
+                                                <td>@item.patient_tel</td>
+                                                <td>@item.DateAndTime</td>
+                                                @if (item.status == true)
+                                                {
+                                                    <td>ویزیت به پایان رسیده است</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>بيمار ويزيت نشده است</td>
+                                                }
+                                                <td>                                                    
+                                                    <a asp-action="AddOrEditPatient" asp-route-Id="@item.patient_Id" asp-route-DAT="@item.DateAndTime"  class="btn btn-primary">ويرايش پرونده پزشكی</a>
+                                                </td>
+                                            </tr>
+                                         }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-7">
+                                <div class="dataTables_paginate paging_simple_numbers">
+                                    <ul class="pagination">
+                                        <li class="paginate_button page-item previous">
+                                            @if (backnumber <= 0)
+                                            {
+                                                <a class="page-link disabled">
+                                                    قبلی
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-action="ShowAllVisits" asp-route-number=@backnumber
+                                                   class="page-link">
+                                                    قبلی
+                                                </a>
+                                            }
+                                        </li>                                        
+                                        <li class="paginate_button page-item next" id="DataTables_Table_0_next">
+                                            @if (nextnumber <= count)
+                                            {
+                                                <a asp-action="ShowAllVisits" asp-route-number=@nextnumber class="page-link">
+                                                    بعدی
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a class="page-link disabled">
+                                                    بعدی
+                                                </a>
+                                            }
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  

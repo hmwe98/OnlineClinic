@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+}
+@inject RoleManager<IdentityRole> rolemanager
+@inject UserManager<OnlineClinicUser> usermanager
+@{ 
+    var users = ViewData["users"] as List<OnlineClinicUser>;
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<form asp-action="SearchUser" asp-controller="Admin">
+    <div class="page-wrapper" style="min-height: 612px;">
+        <div class="content">
+            <div class="row filter-row">
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group form-focus">
+                        <label class="focus-label">نام و نام خانوادگی کاربر</label>
+                        <input name="name" type="text" class="form-control floating">
+                    </div>
+                </div>
+                @*<div class="col-sm-6 col-md-3">
+                    <div class="form-group form-focus select-focus focused">
+                        <select name="role" class="select floating select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                            <option>انتخاب نقش کاربر</option>
+                            @foreach (var item in rolemanager.Roles)
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                    </div>
+                </div>*@
+                <div class="col-sm-6 col-md-3">
+                    <button type="submit" class="btn btn-success btn-block">جستجو</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped custom-table">
+                            <thead>
+                                <tr>
+                                    <th>نام و نام خانوادگی کاربر</th>
+                                    @foreach (var item in rolemanager.Roles)
+                                    {
+                                        <th class="text-center">@item</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in users)
+                                {
+                                    <tr>
+                                        <td>
+                                            <img src="~/assets2/img/user.jpg" class="rounded-circle" alt="" width="28" height="28">
+                                            <h2>@item.name</h2>
+                                        </td>
+                                        @foreach (var item2 in rolemanager.Roles.ToList())
+                                        {
+                                            <td class="text-center">
+                                                <input type="checkbox" userid=@item.Id rolename=@item2.Name
+                                                       @((await usermanager.IsInRoleAsync(item, item2.Name)) == true ? "checked" : "") />
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $(() => {
+        $(':checkbox').change(function () {
+            var status = $(this).prop('checked')
+            if (status) {
+                $.post("/Admin/AddUserToRole/", { id: $(this).attr('userid'), rolename: $(this).attr('rolename') })
+            }
+            else {
+                $.post("/Admin/RemoveUserFromRole/", { id: $(this).attr('userid'), rolename: $(this).attr('rolename') })
+            }
+        })
+    })
+</script>

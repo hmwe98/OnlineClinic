@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "_LayoutPatient";
+}
+@inject UserManager<OnlineClinicUser> userManager
+@{
+    var user = await userManager.FindByNameAsync(User.Identity.Name);
+}
+<div class="page-wrapper" style="min-height: 527px;">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-7 col-6">
+                <h4 class="page-title">اطلاعات اولیه</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5 col-6 m-b-30">
+                <a asp-action="EditProfile" asp-controller="PatientPanel" 
+                   class="btn btn-primary btn-rounded allfontsize"><i class="fa fa-plus"></i>ویرایش حساب کاربری</a>
+            </div>
+        </div>
+        <div class="card-box profile-header">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-view">                       
+                        <div class="profile-basic">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="profile-info-left">
+                                        <h3 class="user-name m-t-0 mb-0">@user.name</h3>                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <ul class="personal-info">                                        
+                                        <li>
+                                            <span class="title">وضعیت تاهل</span>
+                                            @if (user.marital_status != null)
+                                            {
+                                                <span class="text"><a>@user.marital_status</a></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text"><a>ثبت نشده است</a></span>
+                                            }
+                                        </li>
+                                        <li>
+                                            <span class="title">سن</span>
+                                            @if (user.age != 0)
+                                            {
+                                                <span class="text"><a>@user.age</a></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text"><a>ثبت نشده است</a></span>
+                                            }
+                                        </li> 
+                                        <li>
+                                            <span class="title">تلفن</span>
+                                            @if (user.PhoneNumber != null)
+                                            {
+                                                <span class="text"><a>@user.PhoneNumber</a></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text"><a>ثبت نشده است</a></span>
+                                            }
+                                        </li>                                                                                                                                                            
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
